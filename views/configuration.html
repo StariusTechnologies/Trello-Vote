@@ -1,0 +1,56 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css"/>
+
+    <style type="text/css">
+        select {
+            height: 30px;
+        }
+
+        form {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .configuration-subsection {
+            margin-left: 8px;
+        }
+    </style>
+
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script src="./js/utils.js"></script>
+</head>
+<body>
+<form id="configuration">
+    <label for="vote-list">Vote column</label>
+    <select id="vote-list" name="vote-list">
+        <option value="">--</option>
+    </select>
+    <br />
+
+    <label>Votes that require a comment</label>
+    <div class="configuration-subsection">
+        <div class="checkbox-option">
+            <input type="checkbox" name="mandatory-comment-votes" id="mandatory-comment-votes-yes" value="yes" />
+            <label for="mandatory-comment-votes-yes">👍 Yes</label>
+        </div>
+        <div class="checkbox-option">
+            <input type="checkbox" name="mandatory-comment-votes" id="mandatory-comment-votes-no" value="no" />
+            <label for="mandatory-comment-votes-no">👎 No</label>
+        </div>
+        <div class="checkbox-option">
+            <input type="checkbox" name="mandatory-comment-votes" id="mandatory-comment-votes-neutral" value="neutral" />
+            <label for="mandatory-comment-votes-neutral">🤷 Neutral</label>
+        </div>
+    </div>
+    <br />
+
+    <button type="submit" class="mod-primary">Save</button>
+</form>
+<script src="./js/configuration.js"></script>
+</body>
+</html>

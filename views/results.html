@@ -1,0 +1,196 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css"/>
+
+    <style type="text/css">
+        p, body > div {
+            margin: 0;
+        }
+
+        li {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 8px 8px 8px 40px;
+            font-size: 0;
+            border-radius: 3px;
+        }
+
+        li::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+            width: 100%;
+            border-bottom: 1px solid rgba(9, 30, 66, .25);
+        }
+
+        li::before {
+            display: block;
+            position: absolute;
+            font-size: 1rem;
+            right: 8px;
+            top: 8px;
+            line-height: 28px;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        li:last-child::after {
+            display: none;
+        }
+
+        li.mine {
+            /* IDK!!! */
+        }
+
+        li div {
+            font-size: 1rem;
+        }
+
+        li .member {
+            display: inline-block;
+            position: relative;
+            font-weight: 700;
+            line-height: 28px;
+        }
+
+        li .member span {
+            display: inline-block;
+            position: absolute;
+            left: -32px;
+            height: 28px;
+            width: 28px;
+            background-color: #dfe1e6;
+            border-radius: 25em;
+            color: #172b4d;
+            overflow: visible;
+        }
+
+        li .member span .member-initials, .member span .member-avatar {
+            height: 28px;
+            width: 28px;
+        }
+
+        li .member span .member-initials {
+            position: absolute;
+            top: 0;
+            left: 0;
+            line-height: 28px;
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        li .member span .member-avatar {
+            height: 28px;
+            width: 28px;
+            border-radius: 25em;
+            object-fit: cover;
+            max-width: 100%;
+        }
+
+        li .vote {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px 4px 32px;
+            border-radius: 3px;
+            color: white;
+            text-transform: capitalize;
+        }
+
+        li .comment + .vote {
+            top: -2px;
+        }
+
+        li .vote::before {
+            position: absolute;
+            left: -7px;
+            content: ': ';
+            display: inline;
+            color: #172B4D;
+            font-style: normal;
+        }
+
+        li .vote::after {
+            position: absolute;
+            left: 8px;
+        }
+
+        li.yes .vote::before, li.no .vote::before, li.neutral .vote::before, li.other .vote::before {
+            display: none;
+        }
+
+        li.yes .vote::after {
+            content: '👍';
+        }
+
+        li.no .vote::after {
+            content: '👎';
+        }
+
+        li.neutral .vote::after {
+            content: '🤷';
+        }
+
+        li.other .vote::after {
+            content: '💬';
+        }
+
+        li.yes .vote {
+            background-color: rgba(97, 189, 79, 1);
+        }
+
+        li.no .vote {
+            background-color: rgba(235, 90, 70, 1);
+        }
+
+        li.neutral .vote {
+            background-color: rgba(242, 214, 0, 1);
+        }
+
+        li.other .vote {
+            background-color: rgba(81, 232, 152, 1);
+        }
+
+        li .vote.empty {
+            position: relative;
+            top: 0;
+            left: 0;
+            float: none;
+            display: inline-block;
+            margin-left: 8px;
+            padding: 0;
+            border-radius: 0;
+            font-style: italic;
+            color: #6b778c;
+            border: 0;
+        }
+
+        li .comment {
+            clear: both;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px -1px rgba(9, 30, 66, .25), 0 0 0 1px rgba(9, 30, 66, .08);
+            max-width: 100%;
+            padding: 8px 12px;
+        }
+    </style>
+
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script src="./js/utils.js"></script>
+</head>
+<body>
+<div id="results">
+    Chargement...
+</div>
+<script src="./js/results.js"></script>
+</body>
+</html>
