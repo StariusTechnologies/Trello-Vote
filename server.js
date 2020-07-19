@@ -18,6 +18,10 @@ app.get('/results', function (request, response) {
     response.sendFile(__dirname + '/views/results.html');
 });
 
+app.get('/privacy', function (request, response) {
+    response.sendFile(__dirname + '/views/privacy.html');
+});
+
 app.get('*', function (request, response) {
     response.sendFile(__dirname + '/views/index.html');
 });

@@ -24,11 +24,14 @@ var cardButtons = function (t) {
 
 var cardBackSection = function (t) {
     var votes = null;
+    var isInList = false;
 
-    return isCurrentCardInVoteList(t).then(function (isInList) {
-        if (isInList) {
-            return t.get('card', 'shared', 'votes')
+    return isCurrentCardInVoteList(t).then(function (data) {
+        if (data) {
+            isInList = !!data;
         }
+
+        return t.get('card', 'shared', 'votes');
     }).then(function (data) {
         if (data !== undefined) {
             votes = data;
@@ -71,25 +74,30 @@ var cardBackSection = function (t) {
             }
         }
 
-        return [{
-            title: title,
-            icon: ICON,
-            content: {
-                type: 'iframe',
-                url: t.signUrl('./results'),
-                height: 50
-            }
-        }];
+        if (Object.keys(votes).length > 0 || isInList) {
+            return [{
+                title: title,
+                icon: ICON,
+                content: {
+                    type: 'iframe',
+                    url: t.signUrl('./results'),
+                    height: 50
+                }
+            }];
+        }
     });
 };
 
 var cardBadges = function (t) {
     var members = null;
+    var isInList = false;
 
-    return isCurrentCardInVoteList(t).then(function (isInList) {
-        if (isInList) {
-            return t.board('members');
+    return isCurrentCardInVoteList(t).then(function (data) {
+        if (data) {
+            isInList = !!data;
         }
+
+        return t.board('members');
     }).then(function (data) {
         if (data === undefined) {
             return null;
@@ -105,23 +113,27 @@ var cardBadges = function (t) {
 
         votes = computeVotes(votes, members);
         var votesAmount = Object.keys(votes).length;
-        var colour = null;
+        var colour = 'light-gray';
 
-        if (votesAmount === members.length) {
-            colour = 'green';
-        } else if (votesAmount < 1) {
-            colour = 'red';
-        } else if (votesAmount >= ((members.length / 4 * 3) - (members.length / 12))) {
-            colour = 'lime';
-        } else {
-            colour = 'yellow';
+        if (isInList) {
+            if (votesAmount === members.length) {
+                colour = 'green';
+            } else if (votesAmount < 1) {
+                colour = 'red';
+            } else if (votesAmount >= ((members.length / 4 * 3) - (members.length / 12))) {
+                colour = 'lime';
+            } else {
+                colour = 'yellow';
+            }
         }
 
-        return [{
-            icon: ICON,
-            text: votesAmount + '/' + members.length,
-            color: colour,
-        }];
+        if (votesAmount > 0 || isInList) {
+            return [{
+                icon: ICON,
+                text: votesAmount + '/' + members.length,
+                color: colour,
+            }];
+        }
     });
 };
 

@@ -7,9 +7,11 @@ document.getElementById('answer').addEventListener('change', function (event) {
 
     if (mandatoryCommentVotes.indexOf(event.currentTarget.value) > -1) {
         commentInput.setAttribute('required', 'required');
+        commentInput.setAttribute('pattern', '[a-zA-Z]+');
         commentInput.focus();
     } else {
         commentInput.removeAttribute('required');
+        commentInput.removeAttribute('pattern');
     }
 
     if (event.currentTarget.value === '') {
@@ -53,26 +55,35 @@ document.getElementById('vote').addEventListener('submit', function (event) {
 });
 
 t.render(function () {
-    t.get('card', 'shared', 'votes').then(function (votes) {
-        if (isValid('object', votes)) {
-            var commentInput = document.getElementById('comment');
-
-            document.querySelector('#answer option[value="' + votes[memberId].value + '"]').setAttribute('selected', 'selected');
-
-            if (votes[memberId].value === '') {
-                commentInput.setAttribute('disabled', 'disabled');
-            } else {
-                commentInput.value = votes[memberId].comment;
-                commentInput.removeAttribute('disabled');
-            }
-        }
-
-        t.sizeTo('#vote').done();
-    });
-
     t.get('board', 'shared', 'configuration').then(function (configuration) {
+        var commentInput = document.getElementById('comment');
+
         if (isValid('array', configuration.mandatoryCommentVotes)) {
             mandatoryCommentVotes = mandatoryCommentVotes.concat(configuration.mandatoryCommentVotes);
         }
+
+        t.get('card', 'shared', 'votes').then(function (votes) {
+            if (isValid('object', votes)) {
+                document.querySelector('#answer option[value="' + votes[memberId].value + '"]').setAttribute('selected', 'selected');
+
+                if (votes[memberId].value === '') {
+                    commentInput.setAttribute('disabled', 'disabled');
+                } else {
+                    commentInput.value = votes[memberId].comment;
+                    commentInput.removeAttribute('disabled');
+                }
+
+                if (mandatoryCommentVotes.indexOf(votes[memberId].value) > -1) {
+                    commentInput.setAttribute('required', 'required');
+                    commentInput.setAttribute('pattern', '[a-zA-Z]+');
+                    commentInput.focus();
+                } else {
+                    commentInput.removeAttribute('required');
+                    commentInput.removeAttribute('pattern');
+                }
+            }
+
+            t.sizeTo('#vote').done();
+        });
     });
 });
