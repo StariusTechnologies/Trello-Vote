@@ -15,9 +15,9 @@ document.getElementById('answer').addEventListener('change', function (event) {
     }
 
     if (event.currentTarget.value === '') {
-        commentInput.setAttribute('disabled', 'disabled');
+        commentInput.style.display = 'none';
     } else {
-        commentInput.removeAttribute('disabled');
+        commentInput.style.display = 'block';
     }
 
     t.sizeTo('#vote').done();
@@ -67,10 +67,10 @@ t.render(function () {
                 document.querySelector('#answer option[value="' + votes[memberId].value + '"]').setAttribute('selected', 'selected');
 
                 if (votes[memberId].value === '') {
-                    commentInput.setAttribute('disabled', 'disabled');
+                    commentInput.style.display = 'none';
                 } else {
                     commentInput.value = votes[memberId].comment;
-                    commentInput.removeAttribute('disabled');
+                    commentInput.style.display = 'block';
                 }
 
                 if (mandatoryCommentVotes.indexOf(votes[memberId].value) > -1) {

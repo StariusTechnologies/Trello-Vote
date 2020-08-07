@@ -1,14 +1,11 @@
 var t = TrelloPowerUp.iframe();
 var memberId = t.getContext().member;
 
-var noVotes = function () {
-    document.getElementById('results').innerHTML = 'No votes yet.';
-    t.sizeTo('#results').done();
-};
-
-var yesVotes = function (votes, members) {
+var displayVotes = function (votes, members) {
     var memberIdMap = {};
     var list = document.createElement('ul');
+
+    votes = votes || {};
 
     members.forEach(function (member) {
         memberIdMap[member.id] = member.fullName;
@@ -61,7 +58,7 @@ var yesVotes = function (votes, members) {
 
         if (voted && voteData.comment !== undefined && voteData.comment !== null && voteData.comment.trim() !== '') {
             comment.classList.add('comment');
-            comment.innerHTML = voteData.comment;
+            comment.innerHTML = voteData.comment.replace(/\n/gu, '<br />');
 
             listElement.appendChild(comment);
         }
@@ -90,11 +87,9 @@ t.render(function () {
     return t.get('card', 'shared', 'votes').then(function (data) {
         if (isValid('object', data)) {
             votes = data;
-
-            return t.board('members');
-        } else {
-            return noVotes();
         }
+
+        return t.board('members');
     }).then(function (data) {
         if (!isValid('object', data)) {
             t.sizeTo('#results').done();
@@ -102,12 +97,9 @@ t.render(function () {
             return null;
         }
 
-        votes = computeVotes(votes, data.members);
-
-        if (Object.values(votes).length > 0) {
-            yesVotes(votes, data.members);
-        } else {
-            noVotes();
-        }
+        displayVotes(
+            computeVotes(votes, data.members),
+            data.members
+        );
     });
 });

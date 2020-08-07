@@ -19,13 +19,13 @@
 <form id="vote">
     <label for="answer">Vote:</label>
     <select name="answer" id="answer">
-        <option value="">--</option>
+        <option value="">None</option>
         <option value="yes">👍 Yes</option>
         <option value="no">👎 No</option>
         <option value="neutral">🤷 Neutral</option>
         <option value="other">💬 Other (please write below)</option>
     </select>
-    <textarea placeholder="Comment" name="comment" id="comment" disabled="disabled" rows="5"></textarea>
+    <textarea placeholder="Comment" name="comment" id="comment" style="display: none;" rows="5"></textarea>
     <br />
 
     <button type="submit" class="mod-primary">Save</button>

@@ -35,9 +35,9 @@ var cardBackSection = function (t) {
     }).then(function (data) {
         if (data !== undefined) {
             votes = data;
-
-            return t.board('members');
         }
+
+        return t.board('members');
     }).then(function (data) {
         if (data === undefined) {
             return;
