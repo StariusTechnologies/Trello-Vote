@@ -61,8 +61,20 @@ var getVoteList = function (t) {
     return t.get('board', 'shared', 'configuration').then(function (configuration) {
         var voteList = null;
 
-        if (isValid('object', configuration) && configuration.hasOwnProperty('voteList')) {
-            voteList = configuration.voteList;
+        if (!isValid('object', configuration)) {
+            configuration = {};
+        }
+
+        if (!isValid('object', configuration.settings)) {
+            configuration.settings = {};
+        }
+
+        if (configuration.voteList && !configuration.settings.voteList) {
+            configuration.settings.voteList = configuration.voteList;
+        }
+
+        if (configuration.settings.voteList) {
+            voteList = configuration.settings.voteList;
         }
 
         return voteList
@@ -78,5 +90,21 @@ var isVoteList = function (t, list) {
 var isCurrentCardInVoteList = function (t) {
     return t.card('idList').then(function (data) {
         return isVoteList(t, data.idList);
+    });
+};
+
+var memberCanVote = function (t) {
+    var member = t.getContext().member;
+
+    return t.get('board', 'shared', 'configuration').then(function (configuration) {
+        if (!isValid('object', configuration)) {
+            configuration = {};
+        }
+
+        if (!isValid('object', configuration.members)) {
+            configuration.members = {};
+        }
+
+        return typeof configuration.members[member] === 'undefined' ? true : configuration.members[member];
     });
 };

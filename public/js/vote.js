@@ -58,8 +58,16 @@ t.render(function () {
     t.get('board', 'shared', 'configuration').then(function (configuration) {
         var commentInput = document.getElementById('comment');
 
-        if (isValid('array', configuration.mandatoryCommentVotes)) {
-            mandatoryCommentVotes = mandatoryCommentVotes.concat(configuration.mandatoryCommentVotes);
+        if (!isValid('object', configuration)) {
+            configuration = {};
+        }
+
+        if (!isValid('object', configuration.settings)) {
+            configuration.settings = {};
+        }
+
+        if (isValid('array', configuration.settings.mandatoryCommentVotes)) {
+            mandatoryCommentVotes = mandatoryCommentVotes.concat(configuration.settings.mandatoryCommentVotes);
         }
 
         t.get('card', 'shared', 'votes').then(function (votes) {

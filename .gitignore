@@ -1,3 +1,4 @@
 .idea
 *.iml
-deploy.sh
+deploy*.sh
+public/img/icon-black.png

@@ -1,13 +1,15 @@
 var showSettings = function (t) {
-    return t.popup({
+    return t.modal({
         title: 'Configure voting system',
         url: 'configuration'
     });
 };
 
 var cardButtons = function (t) {
-    return isCurrentCardInVoteList(t).then(function (isInList) {
-        if (isInList) {
+    return memberCanVote(t).then(function (canVote) {
+        return canVote ? isCurrentCardInVoteList(t) : false;
+    }).then(function (canVote) {
+        if (canVote) {
             return [{
                 icon: ICON,
                 text: 'Vote',
