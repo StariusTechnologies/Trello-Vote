@@ -108,3 +108,20 @@ var memberCanVote = function (t) {
         return typeof configuration.members[member] === 'undefined' ? true : configuration.members[member];
     });
 };
+
+var getCurrentMemberType = function (t) {
+    return t.board('memberships').then(function (data) {
+        var currentMemberId = t.getContext().member;
+        var membership = data.memberships.find(function (membership) {
+            return membership.idMember === currentMemberId;
+        });
+
+        return membership.memberType;
+    });
+};
+
+var isCurrentMemberAdmin = function (t) {
+    return getCurrentMemberType(t).then(function (memberType) {
+        return memberType === 'admin';
+    });
+};

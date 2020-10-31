@@ -1,7 +1,9 @@
 var showSettings = function (t) {
-    return t.modal({
-        title: 'Configure voting system',
-        url: 'configuration'
+    return isCurrentMemberAdmin(t).then(function (isAdmin) {
+        return t.modal({
+            title: 'Configure voting system',
+            url: isAdmin ? 'configuration' : '403'
+        });
     });
 };
 

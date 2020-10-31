@@ -22,6 +22,10 @@ app.get('/privacy', function (request, response) {
     response.sendFile(__dirname + '/views/privacy.html');
 });
 
+app.get('/403', function (request, response) {
+    response.sendFile(__dirname + '/views/403.html');
+});
+
 app.get('*', function (request, response) {
     response.sendFile(__dirname + '/views/index.html');
 });
