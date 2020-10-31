@@ -125,3 +125,39 @@ var isCurrentMemberAdmin = function (t) {
         return memberType === 'admin';
     });
 };
+
+var getMembersWithoutObservers = function (t) {
+    return t.board('members', 'memberships').then(function (data) {
+        var observerIds = data.memberships.filter(function (memberhsip) {
+            return memberhsip.memberType === 'observer';
+        }).map(function (membership) {
+            return membership.idMember;
+        });
+
+        return data.members.filter(function (member) {
+            return !observerIds.includes(member.id);
+        });
+    });
+};
+
+var getMembersWhoCanVote = function (t) {
+    var configuration = {};
+
+    return t.get('board', 'shared', 'configuration').then(function (data) {
+        if (!isValid('object', data)) {
+            data = {};
+        }
+
+        if (!isValid('object', data.members)) {
+            data.members = {};
+        }
+
+        configuration = data;
+
+        return getMembersWithoutObservers(t);
+    }).then(function (members) {
+        return members.filter(function (member) {
+            return typeof configuration.members[member.id] === 'undefined' ? true : configuration.members[member.id]
+        });
+    });
+};

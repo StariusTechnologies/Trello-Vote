@@ -88,7 +88,9 @@ var generateMembersList = function (members, configuration) {
     var list = document.createElement('ul');
     var allChecked = Object.keys(configuration).length < 1;
 
-    members = Object.values(members).sort(function (a, b) {
+    members = Object.values(members).filter(function (member) {
+        return member.memberType !== 'observer';
+    }).sort(function (a, b) {
         var score = 0
 
         if (getMemberRank(a) < getMemberRank(b)) {

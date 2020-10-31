@@ -41,16 +41,16 @@ var cardBackSection = function (t) {
             votes = data;
         }
 
-        return t.board('members');
-    }).then(function (data) {
-        if (data === undefined) {
+        return getMembersWhoCanVote(t);
+    }).then(function (members) {
+        if (members === undefined) {
             return;
         }
 
-        votes = computeVotes(votes, data.members);
+        votes = computeVotes(votes, members);
 
         var voteValues = ['yes', 'no', 'neutral', 'other'];
-        var title = 'Votes (' + Object.keys(votes).length + '/' + data.members.length + ')';
+        var title = 'Votes (' + Object.keys(votes).length + '/' + members.length + ')';
 
         if (Object.keys(votes).length > 0) {
             var voteStats = Object.values(votes).reduce(function (carry, vote) {
@@ -101,13 +101,13 @@ var cardBadges = function (t) {
             isInList = !!data;
         }
 
-        return t.board('members');
+        return getMembersWhoCanVote(t);
     }).then(function (data) {
         if (data === undefined) {
             return null;
         }
 
-        members = data.members;
+        members = data;
 
         return t.get('card', 'shared', 'votes');
     }).then(function (votes) {

@@ -89,17 +89,17 @@ t.render(function () {
             votes = data;
         }
 
-        return t.board('members');
-    }).then(function (data) {
-        if (!isValid('object', data)) {
+        return getMembersWhoCanVote(t);
+    }).then(function (members) {
+        if (!isValid('array', members)) {
             t.sizeTo('#results').done();
 
             return null;
         }
 
         displayVotes(
-            computeVotes(votes, data.members),
-            data.members
+            computeVotes(votes, members),
+            members
         );
     });
 });
