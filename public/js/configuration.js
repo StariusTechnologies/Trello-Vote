@@ -89,7 +89,7 @@ var generateMembersList = function (members, configuration) {
     var allChecked = Object.keys(configuration).length < 1;
 
     members = Object.values(members).filter(function (member) {
-        return member.memberType !== 'observer';
+        return member.memberType !== 'observer' && !member.deactivated;
     }).sort(function (a, b) {
         var score = 0
 

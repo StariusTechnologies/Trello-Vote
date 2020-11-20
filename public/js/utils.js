@@ -126,16 +126,16 @@ var isCurrentMemberAdmin = function (t) {
     });
 };
 
-var getMembersWithoutObservers = function (t) {
+var getActiveMembersWithoutObservers = function (t) {
     return t.board('members', 'memberships').then(function (data) {
-        var observerIds = data.memberships.filter(function (memberhsip) {
-            return memberhsip.memberType === 'observer';
+        var membersToRemoveIds = data.memberships.filter(function (membership) {
+            return membership.memberType === 'observer' || membership.deactivated;
         }).map(function (membership) {
             return membership.idMember;
         });
 
         return data.members.filter(function (member) {
-            return !observerIds.includes(member.id);
+            return !membersToRemoveIds.includes(member.id);
         });
     });
 };
@@ -154,7 +154,7 @@ var getMembersWhoCanVote = function (t) {
 
         configuration = data;
 
-        return getMembersWithoutObservers(t);
+        return getActiveMembersWithoutObservers(t);
     }).then(function (members) {
         return members.filter(function (member) {
             return typeof configuration.members[member.id] === 'undefined' ? true : configuration.members[member.id]

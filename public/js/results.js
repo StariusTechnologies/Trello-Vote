@@ -7,8 +7,11 @@ var displayVotes = function (votes, members) {
 
     votes = votes || {};
 
-    members.forEach(function (member) {
+    members.map(function (member) {
         memberIdMap[member.id] = member.fullName;
+        member.voteData = votes.hasOwnProperty(member.id) ? votes[member.id] : null;
+
+        return member;
     });
 
     Object.values(members).forEach(function (memberData) {
@@ -18,8 +21,8 @@ var displayVotes = function (votes, members) {
         var vote = document.createElement('div');
         var memberSpan = document.createElement('span');
 
-        var voted = votes.hasOwnProperty(memberData.id);
-        var voteData = voted ? votes[memberData.id] : null;
+        var voted = memberData.voteData !== null;
+        var voteData = memberData.voteData;
 
         listElement.classList.add(voted ? voteData.value : 'empty');
 
