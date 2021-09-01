@@ -161,3 +161,10 @@ var getMembersWhoCanVote = function (t) {
         });
     });
 };
+
+var sanitizeUserInput = function (input) {
+    var element = document.createElement('div');
+    element.innerText = input;
+
+    return element.innerHTML;
+}
