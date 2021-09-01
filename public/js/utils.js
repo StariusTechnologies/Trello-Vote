@@ -1,4 +1,4 @@
-var ICON = 'https://trello-votes.sirius.codes/img/icon-black.png';
+var ICON = 'https://trello-votes.nostradamus.dev/img/icon-black.png';
 
 /**
  * @param {string} type
