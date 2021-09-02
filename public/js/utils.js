@@ -1,4 +1,4 @@
-var ICON = 'https://trello-votes.sirius.codes/img/icon-black.png';
+var ICON = 'https://trello-votes.nostradamus.dev/img/icon-black.png';
 
 /**
  * @param {string} type
@@ -161,3 +161,14 @@ var getMembersWhoCanVote = function (t) {
         });
     });
 };
+
+var sanitizeUserInput = function (input) {
+    var element = document.createElement('div');
+    element.innerText = input;
+
+    return element.innerHTML
+      .replace(/</gu, '&lt;')
+      .replace(/>/gu, '&gt;')
+      .replace(/"/gu, '&quot;')
+      .replace(/'/gu, '&#x27;');
+}
