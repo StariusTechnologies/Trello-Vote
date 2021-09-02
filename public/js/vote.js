@@ -37,11 +37,10 @@ document.getElementById('vote').addEventListener('submit', function (event) {
 
         var value = document.getElementById('answer').value;
         var comment = document.getElementById('comment').value;
-        var sanitizedComment = sanitizeUserInput(comment);
 
         votes[memberId] = {
             value: value,
-            comment: value !== '' ? sanitizedComment : ''
+            comment: value !== '' ? comment : ''
         };
 
         return t.set(

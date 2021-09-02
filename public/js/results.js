@@ -60,8 +60,10 @@ var displayVotes = function (votes, members) {
         listElement.appendChild(member);
 
         if (voted && voteData.comment !== undefined && voteData.comment !== null && voteData.comment.trim() !== '') {
+            var sanitizedComment = sanitizeUserInput(voteData.comment.trim());
+
             comment.classList.add('comment');
-            comment.innerHTML = voteData.comment.replace(/\n/gu, '<br />');
+            comment.innerHTML = sanitizedComment.replace(/\n/gu, '<br />');
 
             listElement.appendChild(comment);
         }
