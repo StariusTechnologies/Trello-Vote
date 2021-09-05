@@ -167,8 +167,6 @@ var sanitizeUserInput = function (input) {
     element.innerText = input;
 
     return element.innerHTML
-      .replace(/</gu, '&lt;')
-      .replace(/>/gu, '&gt;')
       .replace(/"/gu, '&quot;')
       .replace(/'/gu, '&#x27;');
 }
