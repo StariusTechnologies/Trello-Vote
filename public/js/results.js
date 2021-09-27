@@ -32,13 +32,16 @@ var displayVotes = function (votes, members) {
 
         member.classList.add('member');
 
+        var sanitizedMemberName = sanitizeUserInput(memberData.fullName.trim()).replace(/\n/gu, '<br />');
+
         if (memberData.avatar === null) {
             var memberInitials = document.createElement('span');
+            var sanitizedInitials = sanitizeUserInput(memberData.initials.trim()).replace(/\n/gu, '<br />');
 
             memberInitials.classList.add('member-initials');
             memberInitials.setAttribute('aria-label', memberData.fullName);
-            memberInitials.title = memberData.fullName;
-            memberInitials.innerHTML = memberData.initials;
+            memberInitials.title = sanitizedMemberName;
+            memberInitials.innerHTML = sanitizedInitials;
 
             memberSpan.appendChild(memberInitials);
         } else {
@@ -46,8 +49,8 @@ var displayVotes = function (votes, members) {
 
             memberAvatar.classList.add('member-avatar');
             memberAvatar.src = memberData.avatar;
-            memberAvatar.alt = memberData.fullName;
-            memberAvatar.title = memberData.fullName;
+            memberAvatar.alt = sanitizedMemberName;
+            memberAvatar.title = sanitizedMemberName;
             memberAvatar.width = 30;
             memberAvatar.height = 30;
 
@@ -55,7 +58,7 @@ var displayVotes = function (votes, members) {
         }
 
         member.appendChild(memberSpan);
-        member.innerHTML += memberData.fullName;
+        member.innerHTML += sanitizedMemberName;
 
         listElement.appendChild(member);
 
