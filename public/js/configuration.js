@@ -67,8 +67,9 @@ var generateListList = function (lists, voteListId) {
     if (lists.length > 0) {
         html = lists.reduce(function (carry, list) {
             var selectedAttribute = list.id === voteListId ? 'selected="selected"' : '';
+            var sanitizedListName = sanitizeUserInput(list.name.trim()).replace(/\n/gu, '<br />');
 
-            return carry + '<option value="' + list.id + '" ' + selectedAttribute + '>' + list.name + '</option>';
+            return carry + '<option value="' + list.id + '" ' + selectedAttribute + '>' + sanitizedListName + '</option>';
         }, html);
     }
 
@@ -117,7 +118,8 @@ var generateMembersList = function (members, configuration) {
             allChecked || configuration[member.id] ? 'checked="checked"' : ''
         );
 
-        leftDiv.innerHTML = member.fullName;
+        var sanitizedMemberName = sanitizeUserInput(member.fullName.trim()).replace(/\n/gu, '<br />');
+        leftDiv.innerHTML = sanitizedMemberName;
         rightDiv.innerHTML = checkbox;
 
         if (member.memberType !== 'normal') {
