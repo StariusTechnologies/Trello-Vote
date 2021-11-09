@@ -23,8 +23,14 @@ var displayVotes = function (votes, members) {
 
         var voted = memberData.voteData !== null;
         var voteData = memberData.voteData;
+        var sanitizedVoteOption;
 
-        listElement.classList.add(voted ? voteData.value : 'empty');
+        if (voted) {
+            sanitizedVoteOption = sanitizeUserInput(voteData.value.trim());
+            listElement.classList.add(sanitizedVoteOption);
+        } else {
+            listElement.classList.add('empty');
+        }
 
         if (memberData.id === memberId) {
             listElement.classList.add('mine');
@@ -74,7 +80,7 @@ var displayVotes = function (votes, members) {
         vote.classList.add('vote');
 
         if (voted) {
-            vote.innerHTML = voteData.value;
+            vote.innerHTML = sanitizedVoteOption;
         } else {
             vote.classList.add('empty');
             vote.innerHTML = 'no vote yet';
